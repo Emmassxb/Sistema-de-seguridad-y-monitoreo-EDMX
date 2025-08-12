@@ -1,0 +1,116 @@
+1. Actualizar repositorios y sistema (Debian 12)
+"sudo apt update && sudo apt upgrade -y"
+
+2. Instalación de VirtualBox
+Instalar dependencias:
+"sudo apt install -y apt-transport-https ca-certificates software-properties-common"
+
+Descargar e importar la clave pública:
+"wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -"
+
+Agregar repositorio oficial VirtualBox para Debian 12 (bookworm):
+"sudo add-apt-repository 'deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian bookworm contrib'"
+
+Actualizar repositorios:
+"sudo apt update"
+
+Instalar VirtualBox:
+"sudo apt install -y virtualbox-7.0"
+
+Verificar versión instalada:
+"vboxmanage --version"
+
+Agregar usuario al grupo vboxusers:
+"sudo usermod -aG vboxusers $USER"
+
+Nota: Cerrar sesión y volver a entrar para aplicar grupos.
+
+3. Instalación de pfSense
+Descarga:
+Descargar la imagen ISO oficial desde https://www.pfsense.org/download/
+No es comando, se debe descargar previamente.
+
+Crear VM en VirtualBox y montar la ISO (configuración vía GUI).
+
+4. Instalación de Suricata
+Instalar Suricata:
+"sudo apt install -y suricata"
+
+Verificar versión:
+"suricata --version"
+
+Editar configuración para cambiar interfaz:
+"sudo nano /etc/suricata/suricata.yaml"
+
+Test configuración (reemplaza <nombre_interfaz>):
+"sudo suricata -T -c /etc/suricata/suricata.yaml -i <nombre_interfaz>"
+
+Iniciar y habilitar servicio:
+"sudo systemctl start suricata"
+"sudo systemctl enable suricata"
+
+Instalar herramienta de actualización de reglas:
+"sudo apt install -y suricata-update"
+
+Actualizar reglas:
+"sudo suricata-update"
+
+Reiniciar Suricata para aplicar reglas:
+"sudo systemctl restart suricata"
+
+5. Instalación de Wireshark
+Instalar Wireshark:
+"sudo apt install -y wireshark"
+
+Agregar usuario al grupo wireshark para capturas sin root:
+"sudo usermod -aG wireshark $USER"
+
+Verificar versión:
+"wireshark --version"
+
+Nota: Cerrar sesión y volver a entrar para aplicar grupos.
+
+6. Instalación o Importación de Kali Linux
+Descarga imagen preinstalada OVA:
+Desde https://www.kali.org/get-kali/#kali-virtual-machines
+No es comando, se debe descargar previamente.
+
+Importar OVA vía VirtualBox GUI.
+
+Actualizar Kali después de iniciar:
+"sudo apt update && sudo apt full-upgrade -y"
+
+(Opcional) Instalar todas las herramientas Kali:
+"sudo apt install -y kali-linux-full"
+
+7. Instalación y configuración de Zabbix
+Servidor Zabbix: (instalación previa no detallada aquí)
+
+Configuración en interfaz web: acceder a "http://<IP_SERVIDOR>/zabbix"
+
+Zabbix Agent en Debian (ejemplo):
+"sudo apt install -y zabbix-agent"
+
+Configurar zabbix_agentd.conf y reiniciar servicio:
+"sudo systemctl restart zabbix-agent"
+
+Zabbix Agent en Windows:
+Descargar MSI oficial desde https://www.zabbix.com/download_agents
+Instalar vía GUI, configurar Server IP en instalador.
+
+8. Integración Suricata con Zabbix (script para alertas)
+Crear script:
+"sudo nano /usr/local/bin/suricata_alerts.sh"
+
+(Script contenido explicado en sección correspondiente)
+
+Dar permisos:
+"sudo chmod +x /usr/local/bin/suricata_alerts.sh"
+
+Configurar UserParameter en zabbix_agentd.conf:
+"sudo nano /etc/zabbix/zabbix_agentd.conf"
+Agregar:
+UserParameter=suricata.alerts,/usr/local/bin/suricata_alerts.sh
+
+Reiniciar Zabbix Agent:
+"sudo systemctl restart zabbix-agent"
