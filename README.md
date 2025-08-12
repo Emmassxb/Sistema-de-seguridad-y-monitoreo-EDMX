@@ -27,13 +27,8 @@ Este proyecto realiza un sistema de monitoreo y seguridad de red utilizando Debi
 
 ## Instalación y Configuración
 
-Se recomienda revisar el documento `docs/manual_instalacion.md` para los pasos detallados.
+Se recomienda revisar el documento del manual tecnico de instalacion y configuracion para los pasos detallados.
 
-## Uso
-
-- Ejecutar los scripts de integración en `scripts/`.
-- Consultar los reportes en `docs/pruebas_y_resultados.md`.
-- Visualizar alertas y métricas en la interfaz web de Zabbix.
 
 ## Licencia
 
