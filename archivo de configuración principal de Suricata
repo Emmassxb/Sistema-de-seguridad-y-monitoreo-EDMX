@@ -1,2 +1,1 @@
-Edita el archivo de configuración principal de Suricata:
-"sudo nano /etc/suricata/suricata.yaml
+sudo nano /etc/suricata/suricata.yaml
